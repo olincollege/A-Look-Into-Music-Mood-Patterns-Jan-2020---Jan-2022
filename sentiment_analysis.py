@@ -94,7 +94,7 @@ ANGST = ["cages", "could've", "switched", "watchin'", "worthless", "pressure", \
         "alcohol", "villain", "try", "blindly"]
 
 
-#need to finish, still thinking of a good way
+
 def mood_categorizer(word_list):
     """
     This function categorizes the overall mood of a list of words.
@@ -140,25 +140,27 @@ def mood_categorizer(word_list):
         
         # Need to account for songs that have the equal number of certain types
         # of words 
+        
+        
+        if mood_values.count(max(mood_values)) > 1:
 
-        for element in mood_values:
-            if mood_values.count(element) > 1:
-                # take the mood of the first word in the list
-                if ANGER.count(word_list[0]) > 0:
-                    overall_mood = "anger"
+
+            # take the mood of the first word in the list
+            if ANGER.count(word_list[0]) > 0:
+                overall_mood = "anger"
+        
+            elif ANGST.count(word_list[0]) > 0:
+                overall_mood = "angst"
             
-                elif ANGST.count(word_list[0]) > 0:
-                    overall_mood = "angst"
-                
-                elif JOY.count(word_list[0]) > 0:
-                    overall_mood = "joy"
-                
-                elif LOVE.count(word_list[0]) > 0:
-                    overall_mood = "love"
-                else:
-                    overall_mood = "sad"
-                
-                return overall_mood
+            elif JOY.count(word_list[0]) > 0:
+                overall_mood = "joy"
+            
+            elif LOVE.count(word_list[0]) > 0:
+                overall_mood = "love"
+            else:
+                overall_mood = "sad"
+            
+            return overall_mood
 
 
         if max(mood_values) == num_anger_words:
@@ -168,10 +170,12 @@ def mood_categorizer(word_list):
         elif max(mood_values) == num_joy_words:
             overall_mood = "joy"
         elif max(mood_values) == num_love_words:
-            overall_mood == "love"
+            
+            overall_mood = "love"
+    
         elif max(mood_values) == num_sad_words:
             overall_mood = "sad"
-
+    
         # Need to add code to save the overall_mood
 
         return overall_mood

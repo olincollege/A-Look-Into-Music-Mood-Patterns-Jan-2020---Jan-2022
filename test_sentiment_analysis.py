@@ -1,4 +1,4 @@
-import pytest
+
 from sentiment_analysis import *
 
 MOOD_CASES = [
@@ -35,25 +35,48 @@ MOOD_CASES = [
     # Check that a list with equal amounts of different moods returns the
     # mood of the first word
 
-    (["fool", "broke", "bougie", "lovely", "crown", "doubt"], "sad"),
+    (["drowning", "broke", "bougie", "lovely", "crown", "doubt"], "sad"),
 
 ]
+
 
 TOTALS_CASES = [
-    # Check that a dictionary with 4 angry songs, 2 love songs, 1 happy song
-    # 6 sad songs, and 1 angst song returns a list of [4, 2, 1, 6, 1]
-
+   
     # Check that an empty dictionary returns a list of [0, 0, 0, 0, 0]
-
+    ({}, [0,0,0,0,0]),
     # Check that a dictionary of 3 angry songs returns [3, 0, 0 ,0 ,0]
-
-    # Check that a dictionary of 5 love songs returns [0, 5, 0 ,0 ,0]
-
+    ({1: ["police", "killer", "paranoid", "hate", "shit", "box", "anger"], \
+      2: ["police", "killer", "paranoid", "hate", "shit", "box", "anger"], \
+      3: ["police", "killer", "paranoid", "hate", "shit", "box", "anger"]},\
+      [3,0,0,0,0]),
+    # Check that a dictionary of 1 love songs returns [0, 1, 0 ,0 ,0]
+    ({1:["love", "touch", "warm", "date", "lift", "cages", "love"]},\
+     [0,1,0,0,0]),
     # Check that a dictionary of 1 happy song returns [0, 0, 1, 0, 0]
+    ({1:["lights", "glitter", "fly", "delight", "hop", "sing", "joy"]},\
+     [0,0,1,0,0]),
+    # Check that a dictionary of 1 sad songs returns [0, 0, 0, 1, 0]
+    ({1: ["doubt", "fakin'", "breaks", "hurtin'", "miss", "fool", "sad"]},\
+      [0,0,0,1,0]),
+    # Check that a dictionary of 1 angsty songs returns [0, 0, 0, 0, 1]
+    ({1:["could've", "villain", "blindly", "turnt", "ego", "peace", "angst"]},\
+     [0,0,0,0,1]),
 
-    # Check that a dictionary of 2 sad songs returns [0, 0, 0, 2, 0]
-
-    # Check that a dictionary of 3 angsty songs returns [0, 0, 0, 0, 3]
+    # Check that a dictionary with 1 of each type returns [1,1,1,1,1]
+    ({1:["police", "killer", "paranoid", "hate", "shit", "box", "anger"],\
+     2: ["love", "touch", "warm", "date", "lift", "cages", "love"],\
+     3:["lights", "glitter", "fly", "delight", "hop", "sing", "joy"],\
+     4: ["doubt", "fakin'", "breaks", "hurtin'", "miss", "fool", "sad"],\
+     5: ["could've", "villain", "blindly", "turnt", "ego", "peace", "angst"]},\
+     [1,1,1,1,1])
 
 ]
 
+def test_mood_categorizer():
+    for item in MOOD_CASES:
+        assert(mood_categorizer(item[0]) == item[1])
+
+
+def test_totals():
+    for item in TOTALS_CASES:
+        assert(totals(item[0]) == item[1])
